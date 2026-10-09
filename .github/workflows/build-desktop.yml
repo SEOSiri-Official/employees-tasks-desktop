@@ -2,11 +2,14 @@ name: Release Native Desktop Sentinel (Tauri v2)
 
 on:
   push:
-    branches: [main]
+    tags:
+      - 'v*'
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
-  build-binaries:
+  release:
     permissions:
       contents: write
     strategy:
@@ -16,7 +19,7 @@ jobs:
           - platform: 'windows-latest'
             args: ''
           - platform: 'macos-latest'
-            args: '--target aarch64-apple-darwin'
+            args: ''
           - platform: 'ubuntu-22.04'
             args: ''
 
@@ -37,20 +40,18 @@ jobs:
 
       - name: Setup Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin' || '' }}
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Build Native Tauri v2 Bundles
+      - name: Build Native Tauri v2 Bundles & Create Release
         uses: tauri-apps/tauri-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: v__VERSION__
-          releaseName: 'SEOSiri Task Sentinel v__VERSION__'
-          releaseBody: 'Automated native enterprise release for Windows (.msi/.exe), macOS (.dmg), and Linux (.deb).'
+          tagName: v2.0.0
+          releaseName: 'SEOSiri Task Sentinel v2.0.0'
+          releaseBody: 'Official native enterprise release built with Tauri v2 (Rust Core). Supports Windows (.msi/.exe), macOS (.dmg), and Linux (.deb).'
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
