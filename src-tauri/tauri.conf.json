@@ -4,14 +4,14 @@
   "version": "2.0.0",
   "identifier": "com.seosiri.tasks.sentinel",
   "build": {
-    "frontendDist": "../src",
-    "devUrl": null
+    "frontendDist": "../src"
   },
   "app": {
     "withGlobalTauri": true,
     "windows": [
       {
         "title": "SEOSiri Task Sentinel",
+        "label": "main",
         "width": 380,
         "height": 560,
         "resizable": false,
@@ -32,14 +32,9 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["msi", "nsis", "dmg", "deb", "appimage"],
+    "targets": ["nsis", "msi", "dmg", "deb", "appimage"],
     "icon": [
       "icons/icon.png"
-    ],
-    "windows": {
-      "wix": {
-        "language": "en-US"
-      }
-    }
+    ]
   }
 }
