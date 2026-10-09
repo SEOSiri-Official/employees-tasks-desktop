@@ -3,7 +3,7 @@
 use tauri::{
     menu::{Menu, MenuItem},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    AppHandle, Manager,
+    Emitter, Manager,
 };
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
@@ -53,10 +53,16 @@ fn main() {
                 &quit_item,
             ])?;
 
-            // 2. Initialize Native System Tray
-            let _tray = TrayIconBuilder::new()
+            // 2. Initialize Native System Tray with Default Icon
+            let mut tray_builder = TrayIconBuilder::new()
                 .menu(&menu)
-                .tooltip("SEOSiri Enterprise Task Sentinel")
+                .tooltip("SEOSiri Enterprise Task Sentinel");
+
+            if let Some(default_icon) = app.default_window_icon() {
+                tray_builder = tray_builder.icon(default_icon.clone());
+            }
+
+            let _tray = tray_builder
                 .on_menu_event(|app, event| {
                     match event.id().as_ref() {
                         "open_board" => {

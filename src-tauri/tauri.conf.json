@@ -24,16 +24,16 @@
     ],
     "security": {
       "csp": "default-src 'self'; connect-src 'self' https://tasks.seosiri.com https://board.seosiri.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:;"
-    },
-    "trayIcon": {
-      "iconPath": "icons/icon.png",
-      "tooltip": "SEOSiri Task Sentinel: Active Enterprise Daemon"
     }
   },
   "bundle": {
     "active": true,
     "icon": [
-      "icons/icon.png"
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
     ]
   }
 }
