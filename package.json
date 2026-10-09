@@ -1,0 +1,27 @@
+{
+  "name": "employees-tasks-desktop",
+  "version": "1.0.0",
+  "description": "Zero-memory OS taskbar sentinel and autonomous desktop ping daemon for SEOSiri Task Sentinel.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win nsis portable"
+  },
+  "build": {
+    "appId": "com.seosiri.tasksentinel.desktop",
+    "productName": "SEOSiri Task Sentinel",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": ["portable"],
+      "icon": "icon.png"
+    }
+  },
+  "author": "SEOSiri Enterprise Labs <info@seosiri.com> (https://seosiri.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}
