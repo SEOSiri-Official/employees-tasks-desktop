@@ -1,6 +1,6 @@
 {
   "name": "employees-tasks-desktop",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Enterprise Native Task Sentinel Daemon built with Tauri v2 and Rust for Windows, macOS, and Linux.",
   "private": true,
   "scripts": {

@@ -11,14 +11,15 @@
       background: #090d16;
       color: #f8fafc;
       border: 1px solid #1e293b;
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
       height: 100vh;
       display: flex;
       flex-direction: column;
+      font-size: 11px;
     }
     header {
-      padding: 14px 16px;
+      padding: 10px 14px;
       background: #0f172a;
       border-bottom: 1px solid #1e293b;
       display: flex;
@@ -26,34 +27,91 @@
       justify-content: space-between;
     }
     .badge {
-      font-size: 10px;
+      font-size: 9px;
       font-family: monospace;
-      padding: 2px 8px;
+      padding: 2px 6px;
       border-radius: 999px;
       font-weight: 700;
       background: rgba(16, 185, 129, 0.1);
       color: #34d399;
       border: 1px solid rgba(16, 185, 129, 0.2);
     }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      padding: 12px 16px;
+    .id-btn {
+      background: #1e293b;
+      color: #38bdf8;
+      border: 1px solid #334155;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 10px;
+      cursor: pointer;
+      font-weight: bold;
     }
-    .stat-card {
+    .toolbar {
+      padding: 8px 14px;
+      background: #020617;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .btn-dispatch {
+      background: linear-gradient(135deg, #059669, #0d9488);
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      padding: 8px 14px;
+      background: #090d16;
+    }
+    .metric-card {
       background: #0f172a;
       border: 1px solid #1e293b;
-      padding: 10px;
-      border-radius: 10px;
+      padding: 6px;
+      border-radius: 8px;
       text-align: center;
     }
-    .stat-card span { font-size: 10px; color: #64748b; text-transform: uppercase; display: block; }
-    .stat-card strong { font-size: 18px; font-weight: 800; font-family: monospace; }
+    .metric-card span { font-size: 9px; color: #64748b; display: block; text-transform: uppercase; }
+    .metric-card strong { font-size: 14px; font-weight: 800; font-family: monospace; }
+    
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #1e293b;
+      background: #0f172a;
+    }
+    .tab {
+      flex: 1;
+      padding: 6px;
+      text-align: center;
+      font-size: 10px;
+      color: #94a3b8;
+      cursor: pointer;
+      font-family: monospace;
+      border-bottom: 2px solid transparent;
+    }
+    .tab.active {
+      color: #38bdf8;
+      border-bottom-color: #38bdf8;
+      font-weight: bold;
+      background: rgba(56, 189, 248, 0.05);
+    }
+
     .task-list {
       flex: 1;
       overflow-y: auto;
-      padding: 0 16px 12px;
+      padding: 10px 14px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -61,73 +119,171 @@
     .task-item {
       background: #0f172a;
       border: 1px solid #1e293b;
-      padding: 10px;
-      border-radius: 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
-    .task-title { font-size: 12px; font-weight: 700; color: #f1f5f9; }
-    .task-meta { font-size: 10px; color: #64748b; font-family: monospace; display: flex; justify-content: space-between; }
-    .btn-row {
+    .task-meta {
       display: flex;
-      gap: 6px;
-      margin-top: 6px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      font-family: monospace;
     }
-    .btn {
-      flex: 1;
-      padding: 6px;
-      border-radius: 6px;
+    .task-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.3;
+    }
+    .task-actions {
+      display: flex;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .action-btn {
+      padding: 4px 8px;
+      border-radius: 4px;
       border: none;
       font-size: 10px;
-      font-weight: 700;
+      font-weight: bold;
       cursor: pointer;
       font-family: monospace;
     }
-    .btn-start { background: #0284c7; color: #fff; }
-    .btn-done { background: #059669; color: #fff; }
+    .btn-accept { background: #e11d48; color: #fff; }
+    .btn-finish { background: #059669; color: #fff; }
+    .btn-blocker { background: #d97706; color: #fff; }
+    .btn-resume { background: #0284c7; color: #fff; }
+    .btn-chat { background: #1e293b; color: #38bdf8; border: 1px solid #334155; }
+    
     footer {
-      padding: 10px 16px;
+      padding: 8px 14px;
       background: #0f172a;
       border-top: 1px solid #1e293b;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 11px;
+      font-size: 10px;
       font-family: monospace;
     }
-    footer a { color: #38bdf8; text-decoration: none; font-weight: 700; cursor: pointer; }
+    footer a { color: #38bdf8; text-decoration: none; font-weight: bold; cursor: pointer; }
+
+    /* Modal / Drawer */
+    .drawer {
+      position: absolute;
+      inset: 0;
+      background: #090d16;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      padding: 14px;
+    }
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .comment-bubble {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+    .comment-meta { font-size: 9px; color: #10b981; font-weight: bold; }
+    .comment-text { font-size: 11px; color: #e2e8f0; margin-top: 2px; }
+    .drawer-footer {
+      display: flex;
+      gap: 6px;
+      border-top: 1px solid #1e293b;
+      padding-top: 8px;
+      margin-top: 8px;
+    }
+    .drawer-footer input {
+      flex: 1;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+    }
   </style>
 </head>
 <body>
   <header>
     <div>
-      <div style="font-size: 13px; font-weight: 800; color: #fff;">SEOSiri Task Sentinel</div>
-      <div style="font-size: 10px; color: #64748b; font-family: monospace;" id="employeeTag">ETMAGJUMR62</div>
+      <div style="font-weight: 800; color: #fff;">SEOSiri Task Sentinel</div>
+      <button class="id-btn" id="switchIdBtn" title="Click to change Employee ID">ID: <span id="currentIdLabel">...</span></button>
     </div>
-    <span class="badge" id="onlineBadge">ONLINE &bull; &lt;15MB RAM</span>
+    <span class="badge" id="slaBadge">ONLINE &bull; &lt;15MB</span>
   </header>
 
-  <div class="grid">
-    <div class="stat-card">
-      <span>Active Tasks</span>
-      <strong style="color: #38bdf8;" id="activeCount">--</strong>
+  <div class="toolbar">
+    <button class="btn-dispatch" id="autoDispatchBtn" title="Pull next pending task from department queue">
+      <span>Auto-Dispatch ⚡</span>
+    </button>
+    <span style="font-family: monospace; font-size: 10px; color: #10b981;" id="dispatchNotice"></span>
+  </div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <span>Urgent</span>
+      <strong style="color: #f43f5e;" id="urgentCount">0</strong>
     </div>
-    <div class="stat-card">
-      <span>Urgent Queue</span>
-      <strong style="color: #f43f5e;" id="urgentCount">--</strong>
+    <div class="metric-card">
+      <span>In Flight</span>
+      <strong style="color: #38bdf8;" id="progressCount">0</strong>
+    </div>
+    <div class="metric-card">
+      <span>Completed</span>
+      <strong style="color: #34d399;" id="completedCount">0</strong>
     </div>
   </div>
 
-  <div class="task-list" id="taskContainer">
-    <div style="text-align: center; color: #64748b; font-size: 11px; padding: 30px 0;">
-      Polling Edge Telemetry...
+  <div class="tabs">
+    <div class="tab active" data-tab="ALL" id="tabAll">ALL</div>
+    <div class="tab" data-tab="URGENT" id="tabUrgent">URGENT</div>
+    <div class="tab" data-tab="PROGRESS" id="tabProgress">IN FLIGHT</div>
+    <div class="tab" data-tab="PENDING" id="tabPending">BLOCKED</div>
+  </div>
+
+  <div class="task-list" id="taskListContainer">
+    <div style="text-align: center; color: #64748b; padding: 40px 0;">Polling Edge Telemetry...</div>
+  </div>
+
+  <!-- Comments / Feedback Drawer -->
+  <div class="drawer" id="chatDrawer" style="display: none;">
+    <div class="drawer-header">
+      <div>
+        <div style="font-weight: bold; color: #fff;">Feedback &amp; Status Review</div>
+        <div style="font-size: 10px; color: #38bdf8; font-family: monospace;" id="drawerTaskTitle">...</div>
+      </div>
+      <button id="closeDrawerBtn" style="background: none; border: none; color: #64748b; font-size: 16px; cursor: pointer;">✕</button>
     </div>
+    <div class="drawer-body" id="commentsContainer">
+      <div style="text-align: center; color: #64748b; padding: 20px 0;">No review comments.</div>
+    </div>
+    <form class="drawer-footer" id="commentForm">
+      <input type="text" id="commentInput" placeholder="Post progress note or feedback..." required />
+      <button type="submit" class="action-btn" style="background: #0284c7; color: #fff;">Post</button>
+    </form>
   </div>
 
   <footer>
     <span>tasks.seosiri.com</span>
-    <a id="openBoardBtn">Launch Board &rarr;</a>
+    <a id="openBoardLink">Command Board &rarr;</a>
   </footer>
 
   <script src="app.js"></script>

@@ -6,16 +6,6 @@ use tauri::{
     Emitter, Manager,
 };
 use serde::{Deserialize, Serialize};
-use std::time::Duration;
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub struct TaskStats {
-    pub total: usize,
-    pub urgent: usize,
-    pub in_progress: usize,
-    pub pending: usize,
-    pub completed: usize,
-}
 
 #[tauri::command]
 fn get_portal_url() -> String {
@@ -27,36 +17,39 @@ fn get_key_issuer_url() -> String {
     "https://developers.seosiri.com/#key-issuer".to_string()
 }
 
+#[tauri::command]
+fn update_tray_status(app_handle: tauri::AppHandle, urgent: usize, progress: usize) {
+    if let Some(tray) = app_handle.tray_by_id("main_tray") {
+        let tooltip_msg = format!("SEOSiri Task Sentinel\n● Urgent: {}\n● In Flight: {}", urgent, progress);
+        let _ = tray.set_tooltip(Some(tooltip_msg));
+    }
+}
+
 fn main() {
     tauri::Builder::default()
         .setup(|app| {
             let handle = app.handle().clone();
 
-            // 1. Build Native Context Menu
-            let title_item = MenuItem::with_id(&handle, "title", "SEOSiri Task Sentinel (v2.0.0)", false, None::<&str>)?;
+            // Native Context Menu
+            let title_item = MenuItem::with_id(&handle, "title", "SEOSiri Task Sentinel (v2.1.0)", false, None::<&str>)?;
             let sep1 = tauri::menu::PredefinedMenuItem::separator(&handle)?;
-            let status_item = MenuItem::with_id(&handle, "status", "● Status: Initializing...", false, None::<&str>)?;
-            let sep2 = tauri::menu::PredefinedMenuItem::separator(&handle)?;
             let board_item = MenuItem::with_id(&handle, "open_board", "🌐 Open Command Board (board.seosiri.com)", true, None::<&str>)?;
             let issuer_item = MenuItem::with_id(&handle, "open_issuer", "🔑 Open API Key Issuer Desk", true, None::<&str>)?;
-            let sep3 = tauri::menu::PredefinedMenuItem::separator(&handle)?;
+            let sep2 = tauri::menu::PredefinedMenuItem::separator(&handle)?;
             let quit_item = MenuItem::with_id(&handle, "quit", "❌ Exit Sentinel Daemon", true, None::<&str>)?;
 
             let menu = Menu::with_items(&handle, &[
                 &title_item,
                 &sep1,
-                &status_item,
-                &sep2,
                 &board_item,
                 &issuer_item,
-                &sep3,
+                &sep2,
                 &quit_item,
             ])?;
 
-            // 2. Initialize Native System Tray with Default Icon
-            let mut tray_builder = TrayIconBuilder::new()
+            let mut tray_builder = TrayIconBuilder::with_id("main_tray")
                 .menu(&menu)
-                .tooltip("SEOSiri Enterprise Task Sentinel");
+                .tooltip("SEOSiri Enterprise Task Sentinel (v2.1.0)");
 
             if let Some(default_icon) = app.default_window_icon() {
                 tray_builder = tray_builder.icon(default_icon.clone());
@@ -98,41 +91,9 @@ fn main() {
                 })
                 .build(app)?;
 
-            // 3. Background Async Worker: Polls tasks.seosiri.com every 15s (<15MB RAM)
-            let background_handle = handle.clone();
-            tauri::async_runtime::spawn(async move {
-                let client = reqwest::Client::new();
-                loop {
-                    if let Ok(res) = client
-                        .get("https://tasks.seosiri.com/v1/tasks")
-                        .header("X-Employee-ID", "ETMAGJUMR62")
-                        .send()
-                        .await
-                    {
-                        if let Ok(json) = res.json::<serde_json::Value>().await {
-                            if let Some(tasks) = json.get("tasks").and_then(|t| t.as_array()) {
-                                let urgent = tasks.iter().filter(|t| t["status"] == "URGENT").count();
-                                let progress = tasks.iter().filter(|t| t["status"] == "PROGRESS").count();
-                                
-                                let _ = background_handle.emit(
-                                    "telemetry_update",
-                                    serde_json::json!({
-                                        "total": tasks.len(),
-                                        "urgent": urgent,
-                                        "progress": progress,
-                                        "timestamp": chrono::Utc::now().to_rfc3339()
-                                    }),
-                                );
-                            }
-                        }
-                    }
-                    tokio::time::sleep(Duration::from_secs(15)).await;
-                }
-            });
-
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![get_portal_url, get_key_issuer_url])
+        .invoke_handler(tauri::generate_handler![get_portal_url, get_key_issuer_url, update_tray_status])
         .run(tauri::generate_context!())
         .expect("error while running SEOSiri Task Sentinel");
 }
