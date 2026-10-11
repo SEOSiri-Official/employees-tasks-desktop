@@ -21,9 +21,9 @@
 
 ---
 
-## 📦 Download Official Release Binaries (v2.0.0)
+## 📦 Download Official Release Binaries (v2.1.0)
 
-Download the pre-compiled native installers directly from the [Official v2.0.0 Release Page](https://github.com/SEOSiri-Official/employees-tasks-desktop/releases/latest):
+Download the pre-compiled native installers directly from the [Official v2.1.0 Release Page](https://github.com/SEOSiri-Official/employees-tasks-desktop/releases/latest):
 
 | Operating System | Package Type | Direct Download Link | Deployment Target |
 | :--- | :--- | :--- | :--- |
@@ -39,7 +39,7 @@ Download the pre-compiled native installers directly from the [Official v2.0.0 R
 To silently deploy the agent across thousands of Windows workstations with zero user clicks:
 
 ```cmd
-msiexec /i SEOSiriTaskSentinel_2.0.0_x64_en-US.msi /quiet /qn
+msiexec /i SEOSiriTaskSentinel_2.1.0_x64_en-US.msi /quiet /qn
 ```
 
 ## ⚙️ Development & Local Compilation
